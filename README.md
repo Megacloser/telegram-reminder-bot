@@ -1,29 +1,29 @@
-# telegram-bot
+# telegram-reminder-bot
 
-Простой Telegram-бот на `python-telegram-bot` с напоминаниями и поддержкой трёх языков (English — основной, Русский, Deutsch).
+A simple Telegram bot built with `python-telegram-bot` for reminders, with support for three languages (English — default, Русский, Deutsch).
 
-## Использование
+## Usage
 
-Основной способ — кнопки постоянного меню, вводить команды вручную не обязательно:
+The main way to use the bot is the persistent menu — no need to type commands by hand:
 
-- **⏰ Новое напоминание** — пошаговый мастер: выбрать время (пресеты 5m/15m/30m/1h/3h/1d или своё через ✍️ Своё время), затем ввести текст
-- **📋 Мои напоминания** — список активных напоминаний с оставшимся временем; у каждого своя кнопка 🗑 для удаления
-- **❓ Помощь** — подробная инструкция
-- **🌐 Язык** — выбрать язык интерфейса (English / Русский / Deutsch)
+- **⏰ New reminder** — step-by-step wizard: pick a time (presets 5m/15m/30m/1h/3h/1d, or ✍️ Custom to type your own), then enter the text
+- **📋 My reminders** — list of active reminders with time remaining; each one has its own 🗑 delete button
+- **❓ Help** — detailed instructions
+- **🌐 Language** — change interface language (English / Русский / Deutsch)
 
-Для тех, кто предпочитает команды, доступны те же действия:
+The same actions are also available as commands, for those who prefer typing:
 
-- `/start` — показать приветствие и меню
-- `/help` — подробная инструкция
-- `/remind <время><единица> <текст>` — быстрый способ, например `/remind 10m позвонить клиенту`
-  - единицы: `s` (секунды), `m` (минуты), `h` (часы), `d` (дни)
-- `/myreminders` — список напоминаний с возможностью удаления
-- `/language` — выбрать язык
-- `/cancel` — отменить настройку напоминания
+- `/start` — show the greeting and menu
+- `/help` — detailed instructions
+- `/remind <time><unit> <text>` — quick shortcut, e.g. `/remind 10m call the client`
+  - units: `s` (seconds), `m` (minutes), `h` (hours), `d` (days)
+- `/myreminders` — list reminders and delete them
+- `/language` — change language
+- `/cancel` — abort setting a reminder
 
-Язык по умолчанию — **English**, он показывается сразу при первом запуске независимо от языка клиента Telegram; сменить его в любой момент можно кнопкой 🌐 Язык.
+The default language is **English**, shown immediately on first launch regardless of the Telegram client's language; it can be changed at any time via the 🌐 Language button.
 
-## Установка
+## Setup
 
 ```
 python -m venv .venv
@@ -32,27 +32,27 @@ pip install -r requirements.txt
 copy .env.example .env
 ```
 
-Впишите токен бота (полученный у [@BotFather](https://t.me/BotFather)) в `.env`:
+Put your bot token (from [@BotFather](https://t.me/BotFather)) into `.env`:
 
 ```
-BOT_TOKEN=ваш_токен
+BOT_TOKEN=your_token_here
 ```
 
-Файл `.env` уже добавлен в `.gitignore` и не попадёт в git/GitHub.
+`.env` is already listed in `.gitignore` and will not end up in git/GitHub.
 
-## Запуск
+## Running
 
 ```
 python bot.py
 ```
 
-## Хранение данных
+## Data storage
 
-Напоминания и выбранный язык хранятся в локальной SQLite-базе `bot_data.db` (создаётся автоматически рядом с `bot.py`). Файл БД добавлен в `.gitignore` и в git не попадает.
+Reminders and the chosen language are stored in a local SQLite database `bot_data.db` (created automatically next to `bot.py`). The DB file is listed in `.gitignore` and is not committed to git.
 
-- При старте бот дочитывает ещё не сработавшие напоминания из БД и планирует их заново — перезапуск бота их не теряет.
-- Просроченные во время простоя напоминания (время уже прошло) отправляются сразу после запуска.
+- On startup, the bot reloads reminders that haven't fired yet from the database and reschedules them — a bot restart doesn't lose them.
+- Reminders that were due while the bot was offline are sent immediately after startup.
 
-## Заметки
+## Notes
 
-- `.env` с токеном не коммитится (см. `.gitignore`) — храните токен только локально.
+- `.env` with the token is never committed (see `.gitignore`) — keep the token local only.
